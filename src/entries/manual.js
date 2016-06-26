@@ -11,6 +11,7 @@ import SagaManager from '../sagas/SagaManager';
 import './manual.less';
 import 'antd/dist/antd.less';
 
+import createSse from '../services/sse';
 
 //////////////////////
 // Store
@@ -25,6 +26,8 @@ const store = createStore(combineReducers({
   ...reducers, routing,
 }), initialState, enhancer);
 SagaManager.startSagas(sagaMiddleware);
+
+createSse(store);
 
 if (module.hot) {
   module.hot.accept('../reducers', () => {

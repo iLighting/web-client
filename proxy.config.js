@@ -46,29 +46,16 @@ const handleLampOne = function (req, res) {
   }
 }
 
+const handleSse = function (req, res) {
+  console.dir(res);
+  setTimeout(() => {
+    res.send('event:ping\n\n');
+  }, 2000);
+}
+
+// export
+// -------------------------------
 module.exports = {
   '/api/lamps': handleLamp,
   '/api/lamps/:id': handleLampOne,
-  '/api/todos': function(req, res) {
-    setTimeout(function() {
-      res.json({
-        success: true,
-        data: [
-          {
-            id: 1,
-            text: 'Learn antd',
-            isComplete: true,
-          },
-          {
-            id: 2,
-            text: 'Learn ant-tool',
-          },
-          {
-            id: 3,
-            text: 'Learn dora',
-          },
-        ],
-      });
-    }, 500);
-  },
 };
