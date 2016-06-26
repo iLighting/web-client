@@ -17,6 +17,13 @@ class Lamps extends Component {
   handleSelect(id, rowRec) {
     this.context.router.push("/lamps/"+id);
   }
+  handleNavigate(item) {
+    switch (item.key) {
+      case "sensor":
+        this.context.router.push("/sensor");
+        break;
+    }
+  }
   get currentLampObject() {
     let obj = this.props.lamps.lamps[this.props.lamps.currentLamp];
     return obj? obj: undefined;
@@ -24,7 +31,7 @@ class Lamps extends Component {
   render() {
     const self = this;
     return (
-      <ManualLayout activeKey="lamps">
+      <ManualLayout activeKey="lamps" onNavigate={self.handleNavigate.bind(self)}>
         <div className={styles.wrapper}>
           <Row gutter={15}>
             <Col span={5}>

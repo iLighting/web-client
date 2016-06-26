@@ -12,6 +12,7 @@ const Routes = ({ history }) =>
       <Route path="lamps" component={Lamps} >
         <Route path=":id" component={LampPanel} />
       </Route>
+      <Route path="*" component={NotFound} />
     </Route>
   </Router>;
 
