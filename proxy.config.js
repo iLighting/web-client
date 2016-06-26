@@ -1,0 +1,74 @@
+// Learn more on how to config.
+// - https://github.com/dora-js/dora-plugin-proxy#规则定义
+
+let store = {
+  lamps: {
+    1: {id: 1, name: "lamp1", level: 1},
+    2: {id: 2, name: "lamp2", level: 2},
+  }
+};
+
+let count = 1;
+for(count=1; count<50; count++) {
+  store.lamps[count] = {
+    id: count,
+    name: "lamp-"+count,
+    level: Math.random()*100
+  }
+}
+
+const handleLamp = function(req, res) {
+  const method = req.method.toLowerCase();
+  if (method=="get") {
+    res.json(store.lamps);
+  } else {
+    res.status(401).end();
+  }
+};
+
+const handleLampOne = function (req, res) {
+  const method = req.method.toLowerCase();
+  const lid = req.params.id;
+  let lampOne = store.lamps[lid];
+  if (lampOne) {
+    if (method=="get") {
+      res.json(lampOne);
+    } else if (method=="post") {
+      const data = JSON.parse(req.body);
+      Object.assign(lampOne, data);
+      res.json(lampOne);
+    } else if (method=="delete") {
+      delete store.lamps[lid];
+      res.status(200).end();
+    }
+  } else {
+    res.status(404).end();
+  }
+}
+
+module.exports = {
+  '/api/lamps': handleLamp,
+  '/api/lamps/:id': handleLampOne,
+  '/api/todos': function(req, res) {
+    setTimeout(function() {
+      res.json({
+        success: true,
+        data: [
+          {
+            id: 1,
+            text: 'Learn antd',
+            isComplete: true,
+          },
+          {
+            id: 2,
+            text: 'Learn ant-tool',
+          },
+          {
+            id: 3,
+            text: 'Learn dora',
+          },
+        ],
+      });
+    }, 500);
+  },
+};
