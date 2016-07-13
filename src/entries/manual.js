@@ -9,7 +9,6 @@ import { syncHistoryWithStore, routerReducer as routing } from 'react-router-red
 import reducers from '../reducers/index';
 import SagaManager from '../sagas/SagaManager';
 import './manual.less';
-import 'antd/dist/antd.less';
 
 import createSse from '../services/sse';
 
