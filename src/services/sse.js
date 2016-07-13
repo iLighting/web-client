@@ -32,8 +32,8 @@ module.exports = function(store) {
   sse.onerror = function(event) {
     store.dispatch(sseActions.sseStateChange("error"));
     errorNotificationOption = openNotification({
-      message: "服务器推送服务丢失",
-      description: "尝试刷新页面解决",
+      message: "SSE连接失败",
+      description: "将导致无法更新数据。尝试刷新页面解决。",
       duration: null,
     }, "error");
   }
