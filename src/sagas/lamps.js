@@ -5,36 +5,63 @@ import lampsActions from '../actions/lamps';
 import { message } from 'antd';
 
 function* lampsGet() {
-  const data = yield call(lampsApi.lampsGet);
-  yield put(lampsActions.lampsGetSuccess(data));
-}
-
-function* lampsOneGet(action) {
-  const id = action.payload;
-  const data = yield call(lampsApi.lampsOneGet, id);
-  yield put(lampsActions.lampsOneGetSuccess(id, data));
+  try {
+    const data = yield call(lampsApi.lampsGet);
+    if (data.type !== 'ok') throw new Error(data.err);
+    yield put(lampsActions.lampsGetSuccess(data.payload));
+  } catch (e) {
+    yield put(lampsActions.lampsGetFailure(e));
+  }
 }
 
 function* watchLampsGet() {
-  yield takeLatest("lamps/get", lampsGet);
+  yield takeLatest("lamps/list", lampsGet);
 }
 
-function* watchLampsOneGet() {
-  yield takeEvery("lamps/one/get", lampsOneGet);
+function* watchLampsGetDetail() {
+  yield takeEvery("lamps/detail", function * ({payload}) {
+    const { nwk, ep } = payload;
+    try {
+      const detail = yield call(lampsApi.lampsOneGet, nwk, ep);
+      if (detail.type !== 'ok') throw new Error(detail.err);
+      yield put(lampsActions.lampsGetDetailSuccess(detail.payload));
+    } catch (e) {
+      yield put(lampsActions.lampsGetDetailFailure(e));
+    }
+  });
 }
 
-function* watchLampsOneSetLevel() {
-  yield takeLatest("lamps/one/set/level", function* (action) {
-    const {id, level} = action.payload;
-    const data = yield call(lampsApi.lampsOneSetLevel, id, level);
-    yield put(lampsActions.lampsOneSetLevelSuccess(data.id, data.level));
-  })
+function * watchLampsSetName() {
+  yield takeLatest('lamps/setName', function * ({ payload }) {
+    const { nwk, ep, name } = payload;
+    try {
+      const detail = yield call(lampsApi.lampsOneSetName, nwk, ep, name);
+      if (detail.type !== 'ok') throw new Error(detail.err);
+      yield put(lampsActions.lampsSetNameSuccess(detail.payload));
+    } catch (e) {
+      yield put(lampsActions.lampsSetNameFailure(e));
+    }
+  });
+}
+
+function * watchLampsSetPayload() {
+  yield takeLatest('lamps/setPayload', function * ({ payload }) {
+    const { nwk, ep, payload: appPayload } = payload;
+    try {
+      const detail = yield call(lampsApi.lampsOneSetPayload, nwk, ep, appPayload);
+      if (detail.type !== 'ok') throw new Error(detail.err);
+      yield put(lampsActions.lampsSetPayloadSuccess(detail.payload));
+    } catch (e) {
+      yield put(lampsActions.lampsSetPayloadFailure(e));
+    }
+  });
 }
 
 module.exports = function* () {
   yield [
     fork(watchLampsGet),
-    fork(watchLampsOneGet),
-    fork(watchLampsOneSetLevel),
+    fork(watchLampsGetDetail),
+    fork(watchLampsSetName),
+    fork(watchLampsSetPayload),
   ]
 }

@@ -1,26 +1,64 @@
+const { expect } = require('chai');
+
 module.exports = {
   lampsGet: () => ({
-    type: "lamps/get"
+    type: "lamps/list"
   }),
-  lampsGetSuccess: (data) => ({
-    type: "lamps/get/success",
-    payload: data
+  lampsGetSuccess: (data) => {
+    return {
+      type: "lamps/list.success",
+      payload: data
+    }
+  },
+  lampsGetFailure: err => {
+    return {
+      type: 'lamps/list.failure',
+      payload: null,
+      err,
+    }
+  },
+  lampsGetDetail: (nwk, ep) => ({
+    type: 'lamps/detail',
+    payload: {nwk, ep},
   }),
-  lampsOneGet: (id) => ({
-    type: "lamps/one/get",
-    payload: id
+  lampsGetDetailSuccess: detail => ({
+    type: 'lamps/detail.success',
+    payload: detail,
   }),
-  lampsOneGetSuccess: (id, data) => ({
-    type: "lamps/one/get/success",
-    payload: data,
-    meta: id
+  lampsGetDetailFailure: err => ({
+    type: 'lamps/detail.failure',
+    payload: err
   }),
-  lampsOneSetLevel: (id, level) => ({
-    type: "lamps/one/set/level",
-    payload: {id, level}
+  lampsSelect: lamp => ({
+    type: 'lamps/select',
+    payload: lamp,
   }),
-  lampsOneSetLevelSuccess: (id, level) => ({
-    type: "lamps/one/set/level/success",
-    payload: {id, level}
-  })
+  lampsSetName: (nwk, ep, name) => ({
+    type: 'lamps/setName',
+    payload: {nwk, ep, name}
+  }),
+  lampsSetNameSuccess: detail => ({
+    type: 'lamps/setName.success',
+    payload: detail
+  }),
+  lampsSetNameFailure: err => ({
+    type: 'lamps/serName.failure',
+    payload: null,
+    err
+  }),
+  // set payload
+  // ---------------------------
+  lampsSetPayload: (nwk, ep, payload) => ({
+    type: 'lamps/setPayload',
+    payload: {nwk, ep, payload}
+  }),
+  lampsSetPayloadSuccess: detail => ({
+    type: 'lamps/setPayload.success',
+    payload: detail
+  }),
+  lampsSetPayloadFailure: err => ({
+    type: 'lamps/serPayload.failure',
+    payload: null,
+    err
+  }),
 }

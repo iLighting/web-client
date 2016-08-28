@@ -55,7 +55,11 @@ const handleSse = function (req, res) {
 
 // export
 // -------------------------------
+// module.exports = {
+//   '/api/lamps': handleLamp,
+//   '/api/lamps/:id': handleLampOne,
+// };
+
 module.exports = {
-  '/api/lamps': handleLamp,
-  '/api/lamps/:id': handleLampOne,
+  '/api/*': 'http://localhost:3000/',
 };

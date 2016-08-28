@@ -1,17 +1,16 @@
 import React, { PropTypes } from 'react';
 import { Router, Route, IndexRoute, Link, IndexRedirect } from 'react-router';
 import Manual from '../components/Manual';
-import Lamps from '../components/Lamps/Lamps';
-import LampPanel from '../components/Lamps/LampPanel';
+import LampContainer from '../components/Lamp/LampContainer';
+import Lamp from '../components/Lamp/Lamp';
 import NotFound from '../components/NotFound';
 
 const Routes = ({ history }) =>
   <Router history={history}>
     <Route path="/" component={Manual} >
-      <IndexRedirect to="/lamps" />
-      <Route path="lamps" component={Lamps} >
-        <Route path=":id" component={LampPanel} />
-      </Route>
+      <IndexRedirect to="lamp" />
+      <Router path='lamp' component={LampContainer} />
+      <Router path='lamp/nwk/:nwk/ep/:ep' component={Lamp} />
       <Route path="*" component={NotFound} />
     </Route>
   </Router>;

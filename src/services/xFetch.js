@@ -38,8 +38,8 @@ function xFetch(url, options) {
   };
 
   return fetch(url, opts)
-    .then(check401)
-    .then(check404)
+    // .then(check401)
+    // .then(check404)
     .then(jsonParse);
 }
 
