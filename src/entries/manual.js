@@ -8,9 +8,8 @@ import { hashHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer as routing } from 'react-router-redux';
 import reducers from '../reducers/index';
 import SagaManager from '../sagas/SagaManager';
-import './manual.less';
 
-import createSse from '../services/sse';
+require('antd/dist/antd.css');
 
 //////////////////////
 // Store
@@ -26,7 +25,6 @@ const store = createStore(combineReducers({
 }), initialState, enhancer);
 SagaManager.startSagas(sagaMiddleware);
 
-createSse(store);
 
 if (module.hot) {
   module.hot.accept('../reducers', () => {

@@ -29,6 +29,12 @@ function errorMessageParse(res) {
   return res;
 }
 
+function checkType(res) {
+  const { type, payload, err } = res;
+  if (type != 'ok') { return Promise.reject(res)}
+  return res;
+}
+
 function xFetch(url, options) {
   const opts = { ...options };
   opts.headers = {
@@ -40,7 +46,8 @@ function xFetch(url, options) {
   return fetch(url, opts)
     // .then(check401)
     // .then(check404)
-    .then(jsonParse);
+    .then(jsonParse)
+    .then(checkType);
 }
 
 export default xFetch;

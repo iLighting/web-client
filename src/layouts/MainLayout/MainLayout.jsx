@@ -33,7 +33,7 @@ const MainLayout = ({ children, activeKey }) => {
 };
 
 MainLayout.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   activeKey: PropTypes.string.isRequired
 };
 
