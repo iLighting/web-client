@@ -23,7 +23,8 @@
     "react-router-redux": "^4.0.1",
     "redux": "^3.5.2",
     "redux-actions": "0.9.x",
-    "redux-saga": "^0.10.4"
+    "redux-saga": "^0.10.4",
+    "socket.io": "^1.4.8"
   },
   "devDependencies": {
     "atool-test-mocha": "^0.1.4",

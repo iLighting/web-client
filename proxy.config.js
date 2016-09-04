@@ -62,4 +62,5 @@ const handleSse = function (req, res) {
 
 module.exports = {
   '/api/*': 'http://localhost:3000/',
+  '/socket.io/*': 'http://localhost:3000/',
 };

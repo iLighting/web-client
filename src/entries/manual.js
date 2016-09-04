@@ -25,6 +25,9 @@ const store = createStore(combineReducers({
 }), initialState, enhancer);
 SagaManager.startSagas(sagaMiddleware);
 
+// init socket io
+const ClientIo = require('../libs/io');
+new ClientIo(`${window.location.host}/api/io`, store);
 
 if (module.hot) {
   module.hot.accept('../reducers', () => {
