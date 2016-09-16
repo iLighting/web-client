@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import { Row, Col, Form, Card, Button, Switch, Input } from 'antd';
 import Lamp from './Lamp';
+import Pulse from './Pulse';
 import ListMenu from './ListMenu';
 import styles from './ListContainer.module.less';
 
@@ -13,6 +14,11 @@ class ListContainer extends Component {
     this.handleSelect = this._handleSelect.bind(this);
     this.handleChangeName = this._handleChangeName.bind(this);
     this.handleChangeOnOff = this._handleChangeOnOff.bind(this);
+  }
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.appType != this.props.appType) {
+      this.setState({currentIndex: null})
+    }
   }
   get current() {
     const { currentIndex } = this.state;
@@ -59,6 +65,16 @@ class ListContainer extends Component {
             onChangeName={this.handleChangeName}
             onChangeOnOff={this.handleChangeOnOff}
           />
+        case 'pulse':
+          return <Pulse
+            name={current.name}
+            nwk={current.nwk}
+            ieee={current.ieee}
+            endPoint={current.endPoint}
+            loading={loading}
+            transId={current.payload.transId}
+            onChangeName={this.handleChangeName}
+          />
         default:
           return <div>{`暂不支持 ${current.type}`}</div>
       }
@@ -87,6 +103,7 @@ class ListContainer extends Component {
     )
   }
 }
+
 const appType = {
   device: PropTypes.number.isRequired,
   endPoint: PropTypes.number.isRequired,
@@ -97,7 +114,9 @@ const appType = {
   nwk: PropTypes.number.isRequired,
   ieee: PropTypes.string.isRequired,
 };
+
 ListContainer.propTypes = {
+  appType: PropTypes.string.isRequired,
   apps: PropTypes.arrayOf(PropTypes.shape(appType)).isRequired,
   loading: PropTypes.bool.isRequired,
   onChangeAppProps: PropTypes.func

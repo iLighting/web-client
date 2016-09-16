@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { Row, Col, Menu } from 'antd';
 import MainLayout from '../../layouts/MainLayout/MainLayout';
 import ListContainer from './ListContainer';
@@ -33,13 +34,17 @@ class Panel extends Component {
       <MainLayout activeKey="manual">
         <Menu mode="horizontal" selectedKeys={[appType]}>
           <Menu.Item key={'lamp'}>
-            光源
+            <Link to="/ctrl/lamp">光源</Link>
+          </Menu.Item>
+          <Menu.Item key={'pulse'}>
+            <Link to="/ctrl/pulse">轻触开关</Link>
           </Menu.Item>
           <Menu.Item key={'sensor-light'}>
-            光照传感器
+            <Link to="/ctrl/sensor-light">光照传感器</Link>
           </Menu.Item>
         </Menu>
         <ListContainer
+          appType={appType}
           apps={apps}
           loading={loading}
           onChangeAppProps={this.handleChangeAppProps}
@@ -52,7 +57,6 @@ Panel.PropTypes = {
   devices: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   err: PropTypes.any.isRequired,
-  appType: PropTypes.string.isRequired,
   onChangeAppProps: PropTypes.func.isRequired,
 }
 
