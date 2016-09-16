@@ -3,6 +3,7 @@ import { combineReducer } from 'redux';
 import _ from 'lodash';
 
 module.exports = handleActions({
+
   ['device/fetch/all'](state, action) {
     return {...state, loading: true}
   },
@@ -12,6 +13,26 @@ module.exports = handleActions({
   ['device/fetch/all.failure'](state, action) {
     return {...state, loading: false, err: action.err}
   },
+
+  // fetch one
+  ['device/fetch/one'](state, action) {
+    return {...state, fetchOneLoading: true}
+  },
+  ['device/fetch/one.success'](state, action) {
+    const { nwk } = action.payload;
+    const devices = _.chain(state.devices)
+      .map(dev => {
+        if (dev.nwk == nwk) { return action.payload }
+        else { return dev }
+      })
+      .value();
+    return {...state, fetchOneLoading: false, devices}
+  },
+  ['device/fetch/one.failure'](state, action) {
+    return {...state, fetchOneLoading: false, fetchOneErr: action.err}
+  },
+
+  // prop set
   ['device/app/prop/set'](state, action) {
     return {...state, appSetLoading: true}
   },
@@ -36,6 +57,9 @@ module.exports = handleActions({
   devices: [],
   loading: false,
   err: null,
+  // fetch one
+  fetchOneLoading: false,
+  fetchOneErr: null,
   // app set
   appSetLoading: false,
   appSetErr: null,

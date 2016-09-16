@@ -14,6 +14,18 @@ function * watchFetchDevice() {
   });
 }
 
+function * watchFetchDeviceOne() {
+  yield takeEvery('device/fetch/one', function * (action) {
+    try {
+      const { payload: nwk } = action;
+      const { type, payload: device } = yield call(api.fetchDeviceOne, nwk);
+      yield put(actions['device/fetch/one.success'](device));
+    } catch (e) {
+      yield put(actions['device/fetch/one.failure'](e));
+    }
+  });
+}
+
 function * watchAppSet() {
   yield takeEvery('device/app/prop/set', function * (action) {
     const { nwk, ep, props } = action.payload;
@@ -29,6 +41,7 @@ function * watchAppSet() {
 module.exports = function * () {
   yield [
     fork(watchFetchDevice),
+    fork(watchFetchDeviceOne),
     fork(watchAppSet),
   ],
   yield put(actions['device/fetch/all']());

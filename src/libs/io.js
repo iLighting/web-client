@@ -2,28 +2,6 @@ const io = require('socket.io-client');
 const { notification } = require('antd');
 const actions = require('../actions');
 
-// class ClientIo {
-//   constructor(url, store) {
-//     this._url = url;
-//     this._store = store;
-//     this._socket = io.connect(url);
-//     this._socket.on('connect', this._handleConnect.bind(this));
-//     [
-//       'device/join.success'
-//     ].forEach(name => {
-//       this._socket.on(name, this._handleEvent.bind(this, name));
-//     });
-//     this._store.dispatch(actions['io/connect'](url));
-//   }
-//   _handleConnect() {
-//     this._store.dispatch(actions['io/connect.success'](this._socket));
-//   }
-//   _handleEvent(name, data) {
-//     this._store.dispatch(actions['io/receive.success'](name, data));
-//   }
-// }
-//
-
 
 module.exports = function (url, store) {
   const socket = io.connect(url);
@@ -56,4 +34,4 @@ module.exports = function (url, store) {
     .on('data', ({type, payload}) => {
       store.dispatch(actions['io/receive.success'](type, payload))
     })
-}
+};

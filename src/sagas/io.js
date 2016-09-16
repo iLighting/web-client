@@ -16,6 +16,9 @@ function * watchReceive() {
     const { event, data } = action.payload;
     if (event == 'device/join.success') {
       yield put(deviceActions['device/fetch/all']());
+    } else if (event == 'device/change.success') {
+      const { nwk, ep } = data;
+      yield put(deviceActions['device/fetch/one'](nwk));
     }
   })
 }
@@ -25,4 +28,4 @@ module.exports = function * () {
     fork(watchConnect),
     fork(watchReceive),
   ];
-}
+};

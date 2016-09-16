@@ -10,6 +10,9 @@ module.exports = {
   fetchDevices: function (query) {
     return xFetch(`/api/device?${qs.stringify(query)}`);
   },
+  fetchDeviceOne: function (nwk) {
+    return xFetch(`/api/device/nwk/${nwk}`);
+  },
   setAppProps: function (nwk, ep, props) {
     return xFetch(`/api/device/nwk/${nwk}/ep/${ep}`, {
       method: 'PUT',
