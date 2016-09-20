@@ -2,7 +2,8 @@
   "private": true,
   "entry": {
     "index": "./src/entries/index.js",
-    "manual": "./src/entries/manual.js"
+    "manual": "./src/entries/manual.js",
+    "scene": "./src/entries/scene.js"
   },
   "dependencies": {
     "antd": "~1.10.0",

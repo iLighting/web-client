@@ -71,6 +71,10 @@ class Pulse extends Component {
         <Card title="控制器">
           <p>触发ID：{transId}</p>
         </Card>
+        <Gutter />
+        <Card title="设备绑定">
+          <p>暂无</p>
+        </Card>
       </section>
     )
   }

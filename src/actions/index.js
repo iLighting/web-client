@@ -2,5 +2,6 @@
 module.exports = Object.assign(
   {},
   require('./device'),
-  require('./io')
+  require('./scene'),
+  require('./io'),
 )

@@ -9,7 +9,10 @@ const handleClick = function(item) {
       window.location.href = "/";
       break;
     case "manual":
-      window.location.href = "/manual.html"
+      window.location.href = "/manual.html";
+      break;
+    case "scene":
+      window.location.href = '/scene.html';
   }
 }
 
@@ -24,6 +27,7 @@ const MainLayout = ({ children, activeKey }) => {
         >
         <Menu.Item key="home">首页</Menu.Item>
         <Menu.Item key="manual">控制面板</Menu.Item>
+        <Menu.Item key="scene">场景</Menu.Item>
       </Menu>
       <div>
         {children}
