@@ -3,7 +3,8 @@
   "entry": {
     "index": "./src/entries/index.js",
     "manual": "./src/entries/manual.js",
-    "scene": "./src/entries/scene.js"
+    "scene": "./src/entries/scene.js",
+    "board": "./src/entries/board.js"
   },
   "dependencies": {
     "antd": "~1.10.0",

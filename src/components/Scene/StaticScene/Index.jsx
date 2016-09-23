@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { Row, Col, Menu } from 'antd';
 import _ from 'lodash';
 import Meta from './Meta';
+import SceneEditor from './SceneEditor';
 import actions from '../../../actions'
 
 class Index extends Component {
@@ -46,7 +47,12 @@ class Index extends Component {
         <Col span={20}>
           {
             currentScene ? 
-            <Meta name={currentScene.name} onChange={this.handleMetaChange.bind(this)} /> :
+            <div>
+              <Meta name={currentScene.name} onChange={this.handleMetaChange.bind(this)} />
+              <SceneEditor
+                sceneItems={currentScene.items}
+              />
+            </div> :
             <div>请选择一个场景</div>
           }
         </Col>

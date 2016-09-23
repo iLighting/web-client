@@ -8,6 +8,9 @@ const handleClick = function(item) {
     case "home":
       window.location.href = "/";
       break;
+    case "board":
+      window.location.href = "/board.html";
+      break;
     case "manual":
       window.location.href = "/manual.html";
       break;
@@ -26,7 +29,8 @@ const MainLayout = ({ children, activeKey }) => {
         onClick={handleClick}
         >
         <Menu.Item key="home">首页</Menu.Item>
-        <Menu.Item key="manual">控制面板</Menu.Item>
+        <Menu.Item key="board">面板</Menu.Item>
+        <Menu.Item key="manual">手动</Menu.Item>
         <Menu.Item key="scene">场景</Menu.Item>
       </Menu>
       <div>
