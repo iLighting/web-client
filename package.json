@@ -5,8 +5,10 @@
   },
   "dependencies": {
     "antd": "^2.1.0",
+    "codemirror": "^5.20.0",
     "dva": "^1.1.0",
     "react": "^15.1.0",
+    "react-codemirror": "^0.2.6",
     "react-dom": "^15.1.0"
   },
   "devDependencies": {

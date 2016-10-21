@@ -8,6 +8,9 @@ export default {
     list: [],
     listFetching: false,
     listFetchErr: null,
+    // setAppProps
+    setAppPropsFetching: false,
+    setAppPropsErr: null,
   },
 
   subscriptions: {
@@ -31,6 +34,21 @@ export default {
         });
       }
     },
+    *setAppProps (action, {call, put}) {
+      try {
+        const [nwk, ep, props] = action.payload;
+        const app = yield call(api.setAppProps, nwk, ep, props);
+        yield put({
+          type: 'setAppPropsSuccess',
+          payload: [nwk, ep, app]
+        })
+      } catch (e) {
+        yield put({
+          type: 'setAppPropsFailure',
+          err: e.toString()
+        })
+      }
+    }
   },
 
   reducers: {
@@ -42,6 +60,21 @@ export default {
     },
     fetchRemoteFailure (state, action) {
       return {...state, listFetching: false, listFetchErr: action.err};
+    },
+    // setAppProps
+    setAppProps (state, action) {
+      return {...state, setAppPropsFetching: true, setAppPropsErr: null};
+    },
+    setAppPropsSuccess (state, action) {
+      const [nwk, ep, app] = action.payload;
+      return {
+        ...state,
+        list: api.replaceAppByNwkEp(state.list, nwk, ep, app),
+        setAppPropsFetching: false,
+      }
+    },
+    setAppPropsFailure (state, action) {
+      return {...state, setAppPropsFetching: false, setAppPropsErr: action.err};
     }
   },
 
