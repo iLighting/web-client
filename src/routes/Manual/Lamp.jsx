@@ -87,11 +87,11 @@ const Lamp = ({
   }
 
   function onChangeName(name) {
-    currentLamp && setAppProps(currentLamp.nwk, currentLamp.endPoint, {name});
+    currentLamp && setAppProps(currentLamp.nwk, currentLamp.endPoint, {...currentLamp, name});
   }
 
   function onChangePayload(payload) {
-    currentLamp && setAppProps(currentLamp.nwk, currentLamp.endPoint, {payload});
+    currentLamp && setAppProps(currentLamp.nwk, currentLamp.endPoint, {...currentLamp, payload});
   }
 
   let lampCtrlNode = null;

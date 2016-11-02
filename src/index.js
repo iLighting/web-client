@@ -11,6 +11,7 @@ const app = dva();
 app.use(plugins);
 
 // 3. Model
+app.model(require('./models/io'));
 app.model(require('./models/device'));
 app.model(require('./models/lamp'));
 app.model(require('./models/staticScene'));

@@ -8,7 +8,8 @@ require('fs').readdirSync(require('path').join(__dirname + '/mock'))
   });
 
 Object.assign(mock, {
-  '/api/*': 'http://localhost:3000'
+  '/api/*': 'http://localhost:3000',
+  '/socket.io/*': 'http://localhost:3000/',
 });
 
 module.exports = mock;

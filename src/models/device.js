@@ -1,4 +1,5 @@
 import api from '../services/api';
+import { replaceAppByNwkEp } from '../utils/device';
 
 export default {
 
@@ -69,7 +70,7 @@ export default {
       const [nwk, ep, app] = action.payload;
       return {
         ...state,
-        list: api.replaceAppByNwkEp(state.list, nwk, ep, app),
+        list: replaceAppByNwkEp(state.list, nwk, ep, app),
         setAppPropsFetching: false,
       }
     },
