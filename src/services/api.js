@@ -19,5 +19,15 @@ export default {
       method: 'PUT',
       body: JSON.stringify(scene)
     })
+  },
+  // mode
+  fetchMode () {
+    return request('/api/mode');
+  },
+  setMode (mode) {
+    return request('/api/mode', {
+      method: 'PUT',
+      body: JSON.stringify([mode])
+    })
   }
 };

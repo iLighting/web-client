@@ -1,3 +1,7 @@
+/**
+ * 所有的设备信息
+ */
+
 import api from '../services/api';
 import { replaceAppByNwkEp } from '../utils/device';
 

@@ -1,20 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'dva';
 import _ from 'lodash';
-import { Menu, Col, Row, Card, Form, Input, Button, Switch } from 'antd';
+import { Menu, Col, Row, Card, Form, Input, Button, Switch, Alert } from 'antd';
 import ManualMenu from './comps/Menu';
 import { pickAppFromNwkEp } from '../../utils/device';
 
 
 const Gutter = () => <div style={{height: 8}}></div>;
 
-
+// TODO: 改为带状态组件（切换灯具时，需要reset表单）
 let LampMeta = ({
   name, nwk, ieee, endPoint, form,
   onChangeName
 }) => {
 
-  const { getFieldProps, getFieldDecorator } = form;
+  const { getFieldDecorator, resetFields } = form;
   const formItemLayout = {
     labelCol: { span: 3 },
     wrapperCol: { span: 14 },
@@ -24,11 +24,16 @@ let LampMeta = ({
     const { name } = form.getFieldsValue();
     onChangeName && onChangeName(name);
   }
+
   return (
     <div>
       <Form horizontal>
         <Form.Item label="灯具名" {...formItemLayout}>
-          <Input type="text" {...getFieldProps("name", {initialValue: name})} />
+          {
+            getFieldDecorator('name', {
+              initialValue: name
+            })(<Input />)
+          }
         </Form.Item>
         <Form.Item label="网络地址" {...formItemLayout}>
           <p className="ant-form-text">{nwk}</p>
@@ -49,26 +54,32 @@ let LampMeta = ({
 
 LampMeta = Form.create()(LampMeta);
 
-
-const OnOffLamp = ({payload, onChange}) => {
-
+// OnOffLamp
+// =====================================
+const OnOffLamp = ({enable, payload, onChange}) => {
   const { on } = payload;
-
   function handleChange(value) {
     onChange({...payload, on: value})
   }
-
   return (
-    <Switch checked={on} onChange={handleChange} />
+    <Switch 
+      checkedChildren={'开'} 
+      unCheckedChildren={'关'} 
+      disabled={!enable} 
+      checked={on} 
+      onChange={handleChange} />
   )
 }
 
+// Lamp
+// ====================================
 const Lamp = ({
   deviceList,
   deviceListFetching,
   deviceListFetchErr,
   lampList,
   current,
+  sysMode,
   selectLamp,
   setAppProps
 }) => {
@@ -95,10 +106,16 @@ const Lamp = ({
   }
 
   let lampCtrlNode = null;
+  const ctrlEnable = sysMode === 'manual';
   if (currentLamp) {
     const { type, payload } = currentLamp;
     switch (type) {
-      case 'lamp': lampCtrlNode = <OnOffLamp payload={payload} onChange={onChangePayload} />; break;
+      case 'lamp': 
+        lampCtrlNode = <OnOffLamp
+          enable={ctrlEnable} 
+          payload={payload} 
+          onChange={onChangePayload} />; 
+        break;
       default: lampCtrlNode = '暂无对应控制器';
     }
   }
@@ -131,6 +148,7 @@ const Lamp = ({
               </Card>
               <Gutter />
               <Card title="控制器">
+                { !ctrlEnable && <Alert message='非"手动模式"下，手动控制无效' type="warning" />}
                 {lampCtrlNode}
               </Card>
             </div> :
@@ -162,7 +180,8 @@ export default connect(
     deviceListFetching: state.device.listFetching,
     deviceListFetchErr: state.device.listFetchErr,
     lampList: filterLampApps(state.device.list),
-    current: state.lamp.current
+    current: state.lamp.current,
+    sysMode: state.mode.name
   }),
   dispatch => ({
     selectLamp (nwk, ep) { dispatch({type: 'lamp/selectLamp', payload: [nwk, ep]}) },

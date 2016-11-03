@@ -68,6 +68,10 @@ export default {
     setSceneSuccess (state, action) {
       const scene = action.payload;
       return {...state, list: replaceSceneById(state.list, scene.id, scene), setSceneFetching: false, }
+    },
+    setSceneFailure (state, action) {
+      const scene = action.payload;
+      return {...state, setSceneFetching: false, setSceneErr: action.err }
     }
   }
 }

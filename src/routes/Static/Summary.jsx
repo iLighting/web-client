@@ -13,7 +13,7 @@ const Summary = ({
   return (
     <div>
       <SceneMenu name="summary" />
-      <Card title="静态场景概况">
+      <Card title="场景概况">
         <p>总数：{list.length}</p>
         <p>当前场景：TODO</p>
       </Card>

@@ -4,12 +4,12 @@
     "index": "./src/index.js"
   },
   "dependencies": {
-    "antd": "^2.1.0",
+    "antd": "^2.2.1",
     "codemirror": "^5.20.0",
     "dva": "^1.1.0",
-    "react": "^15.1.0",
+    "react": "^15.3.2",
     "react-codemirror": "^0.2.6",
-    "react-dom": "^15.1.0",
+    "react-dom": "^15.3.2",
     "socket.io-client": "^1.5.1"
   },
   "devDependencies": {
@@ -20,6 +20,7 @@
     "babel-plugin-transform-runtime": "^6.9.0",
     "babel-runtime": "^6.9.2",
     "dora": "0.3.x",
+    "dora-plugin-livereload": "^0.5.3",
     "dora-plugin-proxy": "^0.7.0",
     "dora-plugin-webpack": "0.6.x",
     "dora-plugin-webpack-hmr": "^0.1.0",
@@ -27,7 +28,7 @@
     "redbox-react": "^1.2.10"
   },
   "scripts": {
-    "start": "dora --plugins \"proxy,webpack,webpack-hmr\"",
+    "start": "dora --plugins \"proxy,webpack,webpack-hmr,livereload?enableJs=false&injectHost=127.0.0.1\"",
     "build": "atool-build",
     "test": "atool-test-mocha ./src/**/*-test.js"
   }
