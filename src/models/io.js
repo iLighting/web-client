@@ -42,7 +42,12 @@ export default {
 
   effects: {
     *reConnectSuccess (action, {put}) {
-      yield put({ type: 'device/fetchRemote' });
+      yield [
+        put({ type: 'device/fetchRemote' }),
+        put({ type: 'sys/fetchMode' }),
+        put({ type: 'sys/fetchSceneId' }),
+        put({ type: 'staticScene/fetchRemote' }),
+      ]
     },
     *receiveSuccess (action, {put}) {
       const [ eventName, eventPayload ] = action.payload;

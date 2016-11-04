@@ -22,12 +22,22 @@ export default {
   },
   // mode
   fetchMode () {
-    return request('/api/mode');
+    return request('/api/sys/mode');
   },
   setMode (mode) {
-    return request('/api/mode', {
+    return request('/api/sys/mode', {
       method: 'PUT',
       body: JSON.stringify([mode])
     })
-  }
+  },
+  // sys sceneId
+  fetchSceneId () {
+    return request('/api/sys/sceneId');
+  },
+  setSceneId (id) {
+    return request('/api/sys/sceneId', {
+      method: 'PUT',
+      body: JSON.stringify([id])
+    })
+  },
 };

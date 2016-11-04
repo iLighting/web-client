@@ -11,9 +11,8 @@ function ModeCase ({mode, fetching, err}) {
   } else {
     let name;
     switch (mode) {
-      case 'manual': name = '手动'; break;
-      case 'staticScene':
-      case 'scene': name = '静态场景'; break;
+      case 'manual': name = '手动模式'; break;
+      case 'static': name = '场景模式'; break;
       default: name = mode;
     }
     return <span>{name}</span>
@@ -23,8 +22,8 @@ function ModeCase ({mode, fetching, err}) {
 
 export default connect(
   state => ({
-    mode: state.mode.name,
-    fetching: state.mode.fetching,
-    err: state.mode.err
+    mode: state.sys.mode,
+    fetching: state.sys.modeFetching,
+    err: state.sys.modeErr
   })
 )(ModeCase)

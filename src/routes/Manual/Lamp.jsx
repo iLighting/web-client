@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { Menu, Col, Row, Card, Form, Input, Button, Switch, Alert } from 'antd';
 import ManualMenu from './comps/Menu';
 import { pickAppFromNwkEp } from '../../utils/device';
+import ModeCase from '../../components/ModeCase';
 
 
 const Gutter = () => <div style={{height: 8}}></div>;
@@ -148,7 +149,7 @@ const Lamp = ({
               </Card>
               <Gutter />
               <Card title="控制器">
-                { !ctrlEnable && <Alert message='非"手动模式"下，手动控制无效' type="warning" />}
+                { !ctrlEnable && <Alert message={<div><ModeCase /> 下，手动控制无效</div>} type="warning" />}
                 {lampCtrlNode}
               </Card>
             </div> :
@@ -181,7 +182,7 @@ export default connect(
     deviceListFetchErr: state.device.listFetchErr,
     lampList: filterLampApps(state.device.list),
     current: state.lamp.current,
-    sysMode: state.mode.name
+    sysMode: state.sys.mode
   }),
   dispatch => ({
     selectLamp (nwk, ep) { dispatch({type: 'lamp/selectLamp', payload: [nwk, ep]}) },

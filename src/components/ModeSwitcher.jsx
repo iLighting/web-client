@@ -27,11 +27,11 @@ function ModeSwitcher ({
 
 export default connect(
   state => ({
-    mode: state.mode.name,
-    fetching: state.mode.fetching,
-    err: state.mode.err
+    mode: state.sys.mode,
+    fetching: state.sys.modeFetching,
+    err: state.sys.modeErr
   }),
   dispatch => ({
-    onChange: mode => dispatch({type: 'mode/setRemote', payload: mode})
+    onChange: mode => dispatch({type: 'sys/setMode', payload: mode})
   })
 )(ModeSwitcher)
