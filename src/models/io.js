@@ -59,6 +59,12 @@ export default {
           // TODO: 改为获取单个设备信息
           yield put({type: 'device/fetchRemote'});
           break;
+        case 'sys/modeChange.success':
+          yield put({type: 'sys/fetchModeSuccess', payload: eventPayload});
+          break;
+        case 'sys/sceneIdChange.success':
+          yield put({type: 'sys/fetchSceneIdSuccess', payload: eventPayload});
+          break;
       }
     }
   },

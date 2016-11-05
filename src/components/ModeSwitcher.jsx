@@ -15,12 +15,12 @@ function ModeSwitcher ({
   }
 
   return (
-    <div>
+    <span>
       <Radio.Group onChange={onRadioChange} value={mode}>
         <Radio.Button value='manual'>手动模式</Radio.Button>
         <Radio.Button value='static'>场景模式</Radio.Button>
       </Radio.Group>
-    </div>
+    </span>
   )
 
 }

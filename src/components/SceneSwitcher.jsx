@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import _ from 'lodash';
-import { Select } from 'antd';
+import { Select, Row, Col, Button } from 'antd';
 
 const Option = Select.Option;
 
@@ -18,14 +18,21 @@ function SceneSwitcher ({
     onChange && onChange(value);
   }
 
+  function handleFresh() {
+    onChange && sceneId && onChange(sceneId);
+  }
+
   return (
-    <Select disabled={shouldDisabled} value={sceneId} style={{ width: 120 }} onChange={handleChange} >
-      {
-        staticSceneList.map(scene => (
-          <Option key={scene.id} value={scene.id}>{scene.name}</Option>
-        ))
-      }
-    </Select>
+    <span>
+      <Select disabled={shouldDisabled} value={sceneId} onChange={handleChange} style={{width: 200}}>
+        {
+          staticSceneList.map(scene => (
+            <Option key={scene.id} value={scene.id}>{scene.name}</Option>
+          ))
+        }
+      </Select>
+      <Button disabled={shouldDisabled} onClick={handleFresh} style={{marginLeft: 8}}>刷新场景</Button>
+    </span>
   )
 }
 
