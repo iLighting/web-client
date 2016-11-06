@@ -9,6 +9,7 @@ function Index() {
       <Menu name="about"></Menu>
       <h1>关于</h1>
       <hr />
+      <a href="github.com/iLighting">github.com/iLighting</a>
     </div>
   );
 }

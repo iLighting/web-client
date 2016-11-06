@@ -129,7 +129,9 @@ const Lamp = ({
           <Menu selectedKeys={[currentSelectedKey]} onClick={onLampSelect}>
             {
               lampList.map(lamp => (
-                <Menu.Item key={`${lamp.nwk}-${lamp.endPoint}`}>{lamp.name}</Menu.Item>
+                <Menu.Item key={`${lamp.nwk}-${lamp.endPoint}`}>
+                  {lamp.name}
+                </Menu.Item>
               ))
             }
           </Menu>
