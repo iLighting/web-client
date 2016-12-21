@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'dva';
 import _ from 'lodash';
-import { Menu, Col, Row, Card, Form, Input, Button, Switch, Alert } from 'antd';
+import { Menu, Col, Row, Card, Form, Input, Button, Switch, Slider, Alert } from 'antd';
 import ManualMenu from './comps/Menu';
 import { pickAppFromNwkEp } from '../../utils/device';
 import ModeCase from '../../components/ModeCase';
@@ -72,6 +72,28 @@ const OnOffLamp = ({enable, payload, onChange}) => {
   )
 }
 
+// GrayLamp
+// =====================================
+const GrayLampMarks = {
+  0: '关',
+  25: '25%',
+  50: '50%',
+  75: '75%',
+  100: '全亮'
+}
+const GrayLamp = ({enable, payload, onChange}) => {
+  const { level } = payload;
+  function handleChange(value) {
+    onChange({...payload, level: value})
+  }
+  return (
+    <Slider 
+      marks={GrayLampMarks}
+      value={level}
+      onChange={handleChange} />
+  )
+}
+
 // Lamp
 // ====================================
 const Lamp = ({
@@ -113,6 +135,12 @@ const Lamp = ({
     switch (type) {
       case 'lamp': 
         lampCtrlNode = <OnOffLamp
+          enable={ctrlEnable} 
+          payload={payload} 
+          onChange={onChangePayload} />; 
+        break;
+      case 'gray-lamp': 
+        lampCtrlNode = <GrayLamp
           enable={ctrlEnable} 
           payload={payload} 
           onChange={onChangePayload} />; 
@@ -167,7 +195,7 @@ function filterLampApps(devices) {
   let lamps = [];
   devices.forEach(dev => {
     dev.apps.forEach(app => {
-      if (app.type === 'lamp') lamps.push({
+      if (['lamp', 'gray-lamp'].indexOf(app.type)>=0) lamps.push({
         ...app,
         nwk: dev.nwk,
         ieee: dev.ieee
