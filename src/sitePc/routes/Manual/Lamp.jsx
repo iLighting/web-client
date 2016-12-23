@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import _ from 'lodash';
 import { Menu, Col, Row, Card, Form, Input, Button, Switch, Slider, Alert } from 'antd';
 import ManualMenu from './comps/Menu';
-import { pickAppFromNwkEp } from '../../utils/device';
+import { pickAppFromNwkEp } from '../../../utils/device';
 import ModeCase from '../../components/ModeCase';
 
 

@@ -9,7 +9,7 @@ module.exports = function(webpackConfig, env) {
     webpackConfig.devtool = '#eval';
     webpackConfig.babel.plugins.push(['dva-hmr', {
       entries: [
-        './src/index.js',
+        './src/sitePc/index.js',
       ],
     }]);
   } else {

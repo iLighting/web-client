@@ -1,10 +1,11 @@
 {
   "private": true,
   "entry": {
-    "index": "./src/index.js"
+    "pc": "./src/sitePc/index.js"
   },
   "dependencies": {
     "antd": "^2.2.1",
+    "antd-mobile": "^0.9.12",
     "codemirror": "^5.20.0",
     "dva": "^1.1.0",
     "react": "^15.3.2",
