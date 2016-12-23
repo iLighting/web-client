@@ -1,7 +1,8 @@
 {
   "private": true,
   "entry": {
-    "pc": "./src/sitePc/index.js"
+    "pc": "./src/sitePc/index.js",
+    "mobile": "./src/siteMobile/mobile.js"
   },
   "dependencies": {
     "antd": "^2.2.1",

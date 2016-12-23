@@ -10,6 +10,7 @@ module.exports = function(webpackConfig, env) {
     webpackConfig.babel.plugins.push(['dva-hmr', {
       entries: [
         './src/sitePc/index.js',
+        './src/siteMobile/mobile.js',
       ],
     }]);
   } else {
