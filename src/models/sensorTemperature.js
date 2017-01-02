@@ -1,11 +1,11 @@
 
 /**
- * 有关灯具的信息
+ * 有关温度传感器的信息
  */
 
 export default {
 
-  namespace: 'lamp',
+  namespace: 'sensorTemperature',
 
   state: {
     current: null  // [nwk, ep]
@@ -20,7 +20,7 @@ export default {
   },
 
   reducers: {
-    selectLamp (state, action) {
+    selectSensor (state, action) {
       return {...state, current: action.payload}
     }
   },

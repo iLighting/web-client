@@ -4,6 +4,7 @@ import { Link } from 'dva/router';
 import Menu from '../../components/Menu';
 
 import Lamp from './Lamp';
+import SensorTemperature from './SensorTemperature';
 
 
 function Index({children}) {
@@ -22,5 +23,6 @@ Index.propTypes = {
 export default Index;
 
 export {
-  Lamp
+  Lamp,
+  SensorTemperature
 }

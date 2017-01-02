@@ -15,6 +15,7 @@ app.model(require('../models/io'));
 app.model(require('../models/sys'));
 app.model(require('../models/device'));
 app.model(require('../models/lamp'));
+app.model(require('../models/sensorTemperature'));
 app.model(require('../models/staticScene'));
 app.model(require('../models/staticSceneEditor'));
 
