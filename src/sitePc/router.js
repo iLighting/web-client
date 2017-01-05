@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Router, Route, IndexRoute, IndexRedirect, Link } from 'dva/router';
 import NotFound from './routes/NotFound';
 import IndexPage from './routes/Home';
-import ManualIndex, { Lamp, SensorTemperature } from './routes/Manual';
+import ManualIndex, { Lamp, SensorTemperature, SensorIlluminance } from './routes/Manual';
 import staticScene, { Summary, Editor } from './routes/Static';
 import About from './routes/About';
 
@@ -14,6 +14,7 @@ export default function({ history }) {
         <IndexRedirect to="lamp" />
         <Route path="lamp" component={Lamp} />
         <Route path="sensor-temperature" component={SensorTemperature} />
+        <Route path="sensor-illuminance" component={SensorIlluminance} />
       </Route>
       <Route path="/staticScene" component={staticScene}>
         <IndexRedirect to="summary" />
