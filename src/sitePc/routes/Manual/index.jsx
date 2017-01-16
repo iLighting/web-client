@@ -6,6 +6,7 @@ import Menu from '../../components/Menu';
 import Lamp from './Lamp';
 import SensorTemperature from './SensorTemperature';
 import SensorIlluminance from './SensorIlluminance';
+import SensorAsr from './SensorAsr';
 
 
 function Index({children}) {
@@ -27,4 +28,5 @@ export {
   Lamp,
   SensorTemperature,
   SensorIlluminance,
+  SensorAsr
 }

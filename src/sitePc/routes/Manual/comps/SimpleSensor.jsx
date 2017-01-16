@@ -4,6 +4,7 @@ import { pickAppFromNwkEp } from '../../../../utils/device';
 import { Menu, Col, Row, Card, Form, Input, Button, Switch, Slider, Alert } from 'antd';
 import ManualMenu from './Menu';
 import AppMeta from './AppMeta';
+import ModeCase from '../../../components/ModeCase';
 
 const Gutter = () => <div style={{height: 8}}></div>;
 
