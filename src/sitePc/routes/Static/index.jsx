@@ -5,6 +5,7 @@ import Menu from '../../components/Menu';
 
 import Summary from './Summary';
 import Editor from './Editor';
+import Chooser from './Chooser';
 
 function Index({children}) {
   return (
@@ -23,5 +24,6 @@ export default Index;
 
 export {
   Summary,
-  Editor
+  Editor,
+  Chooser,
 }

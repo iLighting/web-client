@@ -47,6 +47,7 @@ export default {
         put({ type: 'sys/fetchMode' }),
         put({ type: 'sys/fetchSceneId' }),
         put({ type: 'staticScene/fetchRemote' }),
+        put({ type: 'staticSceneChooser/fetchGroup' }),
       ]
     },
     *receiveSuccess (action, {put}) {

@@ -5,7 +5,7 @@
     "mobile": "./src/siteMobile/mobile.js"
   },
   "dependencies": {
-    "antd": "^2.2.1",
+    "antd": "^2.6.4",
     "antd-mobile": "^0.9.12",
     "codemirror": "^5.20.0",
     "dva": "^1.1.0",

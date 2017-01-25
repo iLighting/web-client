@@ -20,6 +20,16 @@ export default {
       body: JSON.stringify(scene)
     })
   },
+  // staticSceneChooser
+  fetchStaticSceneChooserGroups () {
+    return request('/api/sceneChooser');
+  },
+  setStaticSceneChooserGroups (groups) {
+    return request('/api/sceneChooser', {
+      method: 'PUT',
+      body: JSON.stringify(groups)
+    })
+  },
   // mode
   fetchMode () {
     return request('/api/sys/mode');

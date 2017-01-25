@@ -3,7 +3,7 @@ import { Router, Route, IndexRoute, IndexRedirect, Link } from 'dva/router';
 import NotFound from './routes/NotFound';
 import IndexPage from './routes/Home';
 import ManualIndex, { Lamp, SensorTemperature, SensorIlluminance, SensorAsr } from './routes/Manual';
-import staticScene, { Summary, Editor } from './routes/Static';
+import staticScene, { Summary, Editor, Chooser } from './routes/Static';
 import About from './routes/About';
 
 export default function({ history }) {
@@ -21,6 +21,7 @@ export default function({ history }) {
         <IndexRedirect to="summary" />
         <Route path="summary" component={Summary} />
         <Route path="editor" component={Editor} />
+        <Route path="chooser" component={Chooser} />
       </Route>
       <Route path="/about" component={About} />
       <Route path="*" component={NotFound} />

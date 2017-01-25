@@ -20,6 +20,7 @@ app.model(require('../models/sensorIlluminance'));
 app.model(require('../models/sensorAsr'));
 app.model(require('../models/staticScene'));
 app.model(require('../models/staticSceneEditor'));
+app.model(require('../models/staticSceneChooser'));
 
 // 4. Router
 app.router(require('./router'));

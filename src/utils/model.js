@@ -1,4 +1,23 @@
 
+/**
+ * 注入：
+ * 
+ * - state.${name}
+ * - state.${name}Fetching
+ * - state.${name}Setting
+ * - state.${name}Err
+ * 
+ * - effects.fetch${name}
+ * - effects.set${name}
+ * 
+ * - reducers.fetch${camelName}
+ * - reducers.fetch${camelName}Success
+ * - reducers.fetch${camelName}Failure
+ * - reducers.set${camelName}
+ * - reducers.set${camelName}Success
+ * - reducers.set${camelName}Failure
+
+ */
 function injectModel(model, name, {
   initial,
   fetchApi,
