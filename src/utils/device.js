@@ -1,4 +1,21 @@
-import _ from 'lodash';
+
+function pickAppByType(deviceList, type) {
+  for(let i=0; i<deviceList.length; i++) {
+    const dev = deviceList[i];
+    const apps = dev.apps;
+    for(let j=0; j<apps.length; j++) {
+      const app = apps[j];
+      if (!type || (app.type === type)) {
+        return {
+          ...app,
+          nwk: dev.nwk,
+          ieee: dev.ieee,
+          name: dev.name,
+        }
+      }
+    }
+  }
+}
 
 function pickAppFromNwkEp(deviceList, nwk, ep) {
   for(let i=0; i<deviceList.length; i++) {
@@ -10,7 +27,8 @@ function pickAppFromNwkEp(deviceList, nwk, ep) {
         return {
           ...app,
           nwk: dev.nwk,
-          ieee: dev.ieee
+          ieee: dev.ieee,
+          name: dev.name,
         }
       }
     }
@@ -33,5 +51,6 @@ function replaceAppByNwkEp(deviceList, nwk, ep, newApp) {
 
 export default {
   pickAppFromNwkEp,
-  replaceAppByNwkEp
+  replaceAppByNwkEp,
+  pickAppByType,
 }

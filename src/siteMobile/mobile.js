@@ -11,12 +11,13 @@ const app = dva();
 app.use(plugins);
 
 // 3. Model
+// common
 app.model(require('../models/io'));
 app.model(require('../models/sys'));
 app.model(require('../models/device'));
-app.model(require('../models/lamp'));
 app.model(require('../models/staticScene'));
-app.model(require('../models/staticSceneEditor'));
+// specific
+
 
 // 4. Router
 app.router(require('./router'));

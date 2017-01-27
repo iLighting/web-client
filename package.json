@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "antd": "^2.6.4",
-    "antd-mobile": "^0.9.12",
+    "antd-mobile": "^0.9.14",
     "codemirror": "^5.20.0",
     "dva": "^1.1.0",
     "react": "^15.3.2",

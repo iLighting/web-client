@@ -1,12 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
+import NavBar from 'antd-mobile/lib/nav-bar';
 
-function Index() {
+const Index = ({
+  history
+}) => {
   return (
     <div>
-      <h1>关于</h1>
-      <hr />
+      <NavBar 
+        leftContent="返回" 
+        onLeftClick={() => history.goBack()}
+      >关于</NavBar>
       <a href="github.com/iLighting">github.com/iLighting</a>
     </div>
   );
