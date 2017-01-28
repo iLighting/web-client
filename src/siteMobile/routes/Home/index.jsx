@@ -9,7 +9,7 @@ const entrances = [{
   link: '/manual/all',
 }, {
   text: '场景',
-  link: '#',
+  link: '/scene',
 }, {
   text: '关于',
   link: '/about',

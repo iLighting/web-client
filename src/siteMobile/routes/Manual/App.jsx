@@ -91,6 +91,7 @@ function getTypeAppCtrlConstructor(type) {
 
 let App = ({
   deviceList,
+  currentMode,
   history,
   params,
   form,
@@ -100,6 +101,7 @@ let App = ({
 
   const { getFieldProps, getFieldsValue, resetFields } = form;
   const currentApp = pickAppFromNwkEp(deviceList, params.nwk, params.ep);
+  const isManualMode = currentMode === 'manual';
   const AppCtrl = getTypeAppCtrlConstructor(currentApp && currentApp.type);
 
   function handleSave() {
@@ -143,8 +145,12 @@ let App = ({
             <Button inline onClick={handleSave} type="primary">保存</Button>
             <Button inline onClick={handleReset}>重置</Button>
           </footer>
-          <List renderHeader={() => '控制器'}>
-            <AppCtrl enable={true} payload={currentApp.payload} onChange={handleChangeAppPayload} />            
+          <List renderHeader={() => '控制器' + (isManualMode ? '' : '（当前非手动模式，控制器不可用）')}>
+            <AppCtrl 
+              enable={isManualMode} 
+              payload={currentApp.payload} 
+              onChange={handleChangeAppPayload} 
+            />            
           </List>
         </div> :
         'loading...'
@@ -156,7 +162,8 @@ App = createForm()(App);
 
 export default connect(
   state => ({
-    deviceList: state.device.list
+    deviceList: state.device.list,
+    currentMode: state.sys.mode,
   }),
   dispatch => ({
     setAppProps (nwk, ep, props) { dispatch({type: 'device/setAppProps', payload: [nwk, ep, props]}) }
