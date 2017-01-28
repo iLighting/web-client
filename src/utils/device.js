@@ -1,47 +1,64 @@
 
-function pickAppByType(deviceList, type) {
+/**
+ * @param {String} type
+ * @return {Array}
+ */
+export function filterAppsByType(deviceList, type) {
+  let re = [];
   for(let i=0; i<deviceList.length; i++) {
     const dev = deviceList[i];
     const apps = dev.apps;
     for(let j=0; j<apps.length; j++) {
       const app = apps[j];
       if (!type || (app.type === type)) {
+        re.push({
+          ...app,
+          nwk: dev.nwk,
+          ieee: dev.ieee,
+          devName: dev.name,
+        })
+      }
+    }
+  }
+  return re;
+}
+
+/**
+ * @param {Number|String} nwk
+ * @param {Number|String} ep
+ * @return {Object}
+ */
+export function pickAppFromNwkEp(deviceList, nwk, ep) {
+  for(let i=0; i<deviceList.length; i++) {
+    const dev = deviceList[i];
+    const apps = dev.apps;
+    for(let j=0; j<apps.length; j++) {
+      const app = apps[j];
+      if ((dev.nwk == nwk) && (app.endPoint == ep)) {
         return {
           ...app,
           nwk: dev.nwk,
           ieee: dev.ieee,
-          name: dev.name,
+          devName: dev.name,
         }
       }
     }
   }
 }
 
-function pickAppFromNwkEp(deviceList, nwk, ep) {
+/**
+ * @param {Number|String} nwk
+ * @param {Number|String} ep
+ * @param {Object} newApp
+ * @return {Object}
+ */
+export function replaceAppByNwkEp(deviceList, nwk, ep, newApp) {
   for(let i=0; i<deviceList.length; i++) {
     const dev = deviceList[i];
     const apps = dev.apps;
     for(let j=0; j<apps.length; j++) {
       const app = apps[j];
-      if ((dev.nwk === nwk) && (app.endPoint === ep)) {
-        return {
-          ...app,
-          nwk: dev.nwk,
-          ieee: dev.ieee,
-          name: dev.name,
-        }
-      }
-    }
-  }
-}
-
-function replaceAppByNwkEp(deviceList, nwk, ep, newApp) {
-  for(let i=0; i<deviceList.length; i++) {
-    const dev = deviceList[i];
-    const apps = dev.apps;
-    for(let j=0; j<apps.length; j++) {
-      const app = apps[j];
-      if ((dev.nwk === nwk) && (app.endPoint === ep)) {
+      if ((dev.nwk == nwk) && (app.endPoint == ep)) {
         apps[j] = newApp;
         return deviceList;
       }
@@ -52,5 +69,5 @@ function replaceAppByNwkEp(deviceList, nwk, ep, newApp) {
 export default {
   pickAppFromNwkEp,
   replaceAppByNwkEp,
-  pickAppByType,
+  filterAppsByType,
 }

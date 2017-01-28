@@ -10,7 +10,7 @@ const Index = ({
     <div>
       <NavBar 
         leftContent="返回" 
-        onLeftClick={() => history.goBack()}
+        onLeftClick={() => history.replace('/')}
       >关于</NavBar>
       <a href="github.com/iLighting">github.com/iLighting</a>
     </div>

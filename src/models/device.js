@@ -74,7 +74,8 @@ export default {
       const [nwk, ep, app] = action.payload;
       return {
         ...state,
-        list: replaceAppByNwkEp(state.list, nwk, ep, app),
+        // replace list instance
+        list: replaceAppByNwkEp(state.list, nwk, ep, app).concat(),
         setAppPropsFetching: false,
       }
     },
