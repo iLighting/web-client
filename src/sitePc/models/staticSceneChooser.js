@@ -1,5 +1,5 @@
-import api from '../services/api';
-import { injectModel } from '../utils/model';
+import api from '../../services/api';
+import { injectModel } from '../../utils/model';
 
 const model = {
   namespace: 'staticSceneChooser',

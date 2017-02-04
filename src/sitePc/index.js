@@ -14,13 +14,13 @@ app.use(plugins);
 app.model(require('../models/io'));
 app.model(require('../models/sys'));
 app.model(require('../models/device'));
-app.model(require('../models/lamp'));
-app.model(require('../models/sensorTemperature'));
-app.model(require('../models/sensorIlluminance'));
-app.model(require('../models/sensorAsr'));
 app.model(require('../models/staticScene'));
-app.model(require('../models/staticSceneEditor'));
-app.model(require('../models/staticSceneChooser'));
+app.model(require('./models/lamp'));
+app.model(require('./models/sensorTemperature'));
+app.model(require('./models/sensorIlluminance'));
+app.model(require('./models/sensorAsr'));
+app.model(require('./models/staticSceneEditor'));
+app.model(require('./models/staticSceneChooser'));
 
 // 4. Router
 app.router(require('./router'));
