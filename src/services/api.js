@@ -24,10 +24,21 @@ export default {
   fetchStaticSceneChooserGroups () {
     return request('/api/sceneChooser');
   },
-  setStaticSceneChooserGroups (groups) {
+  addStaticSceneChooserGroup ({name, scene, rules}) {
     return request('/api/sceneChooser', {
+      method: 'POST',
+      body: JSON.stringify({name, scene, rules})
+    })
+  },
+  setStaticSceneChooserGroup ({id, name, scene, rules}) {
+    return request(`/api/sceneChooser/${id}`, {
       method: 'PUT',
-      body: JSON.stringify(groups)
+      body: JSON.stringify({name, scene, rules})
+    })
+  },
+  deleteStaticSceneChooserGroup (id) {
+    return request(`/api/sceneChooser/${id}`, {
+      method: 'DELETE'
     })
   },
   // mode

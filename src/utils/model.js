@@ -18,7 +18,7 @@
  * - reducers.set${camelName}Failure
 
  */
-function injectModel(model, name, {
+export function injectModel(model, name, {
   initial,
   fetchApi,
   setApi
@@ -81,8 +81,4 @@ function injectModel(model, name, {
     },
   };
   return model;
-}
-
-export default {
-  injectModel
 }
