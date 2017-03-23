@@ -9,12 +9,15 @@ const Item = List.Item;
 const Brief = Item.Brief;
 
 const entrances = [{
+  icon: require('./images/lights.png'),
   text: '手动',
   link: '/manual/all',
 }, {
+  icon: require('./images/home.png'),
   text: '场景',
   link: '/scene',
 }, {
+  icon: require('./images/information.png'),
   text: '关于',
   link: '/about',
 }]
@@ -35,7 +38,6 @@ const Index = ({
       <List renderHeader={() => '设备信息'}>
         <Item extra={deviceList.length}>设备数</Item>
       </List>
-      <p>芝士就是力量，法国就是培根</p>
     </div>
   );
 }

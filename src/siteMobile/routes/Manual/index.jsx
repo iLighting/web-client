@@ -11,11 +11,13 @@ const Item = List.Item;
 const Brief = Item.Brief;
 
 const classifications = [
-  {text: '全部', type: 'all', link: '/manual/all'},
-  {text: '单色灯', type: 'lamp', link: '/manual/lamp'},
-  {text: '调光灯', type: 'gray-lamp', link: '/manual/gray-lamp'},
-  {text: '照度', type: 'illuminance-sensor', link: '/manual/illuminance-sensor'},
-  {text: '温度', type: 'temperature-sensor', link: '/manual/temperature-sensor'},
+  { text: '全部', type: 'all', link: '/manual/all' },
+  { text: '单色', type: 'lamp', link: '/manual/lamp' },
+  { text: '调光', type: 'gray-lamp', link: '/manual/gray-lamp' },
+  { text: '照度', type: 'illuminance-sensor', link: '/manual/illuminance-sensor' },
+  { text: '温度', type: 'temperature-sensor', link: '/manual/temperature-sensor' },
+  { text: '占用', type: 'occupy-sensor', link: '/manual/occupy-sensor' },
+  { text: '语音', type: 'asr-sensor', link: '/manual/asr-sensor' },
 ]
 
 const ClassificationEntrance = ({
@@ -23,7 +25,7 @@ const ClassificationEntrance = ({
   onClick
 }) => {
   let index = 0;
-  for (let i=0; i<classifications.length; i++) {
+  for (let i = 0; i < classifications.length; i++) {
     if (classifications[i].type === type) {
       index = i;
       break;
@@ -46,13 +48,13 @@ const AppList = ({
   apps,
   onClick,
 }) => {
-  function handleItemClick (app) {
+  function handleItemClick(app) {
     onClick && onClick(app);
   }
   return (
     <List>
       {apps.map(app => (
-        <Item 
+        <Item
           key={app.id}
           arrow="horizontal"
           multipleLine
@@ -66,7 +68,7 @@ const AppList = ({
   )
 }
 
-function genTypeAppListNode (type) {
+function genTypeAppListNode(type) {
   return ({
     history,
     deviceList
@@ -75,29 +77,29 @@ function genTypeAppListNode (type) {
     function handleClassificationChange(c) {
       history.push(c.link);
     }
-    function handleAppClick (app) {
+    function handleAppClick(app) {
       history.push(`/manual/nwk/${app.nwk}/ep/${app.endPoint}`);
     }
     return (
       <div>
-        <NavBar 
-          leftContent="返回" 
+        <NavBar
+          leftContent="返回"
           onLeftClick={() => history.replace('/')}
         >手动控制</NavBar>
         <WhiteSpace />
         <ClassificationEntrance type={type} onClick={handleClassificationChange} />
         <WhiteSpace />
         {
-          apps?
-          <AppList apps={apps} onClick={handleAppClick}/> :
-          'loading...'
+          apps ?
+            <AppList apps={apps} onClick={handleAppClick} /> :
+            'loading...'
         }
       </div>
     )
   }
 }
 
-function genConnectedTypeAppListNode (type) {
+function genConnectedTypeAppListNode(type) {
   return connect(
     state => ({
       deviceList: state.device.list
@@ -111,4 +113,6 @@ export default {
   GrayLampApp: genConnectedTypeAppListNode('gray-lamp'),
   IlluminanceApp: genConnectedTypeAppListNode('illuminance-sensor'),
   TemperatureApp: genConnectedTypeAppListNode('temperature-sensor'),
+  OccupyApp: genConnectedTypeAppListNode('occupy-sensor'),
+  AsrApp: genConnectedTypeAppListNode('asr-sensor'),
 }

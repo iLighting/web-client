@@ -19,6 +19,8 @@ export default function({ history }) {
       <Route path="/manual/gray-lamp" component={Manual.GrayLampApp} />
       <Route path="/manual/illuminance-sensor" component={Manual.IlluminanceApp} />
       <Route path="/manual/temperature-sensor" component={Manual.TemperatureApp} />
+      <Route path="/manual/occupy-sensor" component={Manual.OccupyApp} />
+      <Route path="/manual/asr-sensor" component={Manual.AsrApp} />
       <Route path="/manual/nwk/:nwk/ep/:ep" component={App} />
       {/** scene **/}
       <Route path="/scene" component={Scene} />

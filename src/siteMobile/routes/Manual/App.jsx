@@ -8,6 +8,7 @@ import Button from 'antd-mobile/lib/button';
 import Switch from 'antd-mobile/lib/switch';
 import Slider from 'antd-mobile/lib/slider';
 import WingBlank from 'antd-mobile/lib/wing-blank';
+import WhiteSpace from 'antd-mobile/lib/white-space';
 import { createForm } from 'rc-form';
 import { pickAppFromNwkEp } from '../../../utils/device';
 
@@ -76,6 +77,8 @@ const genSimpleDisplay = (label, uint) => ({payload}) => {
 }
 const Temperature = genSimpleDisplay('温度', '℃');
 const Illuminance = genSimpleDisplay('照度', 'lux');
+const Occupy = genSimpleDisplay('占用', '');
+const Asr = genSimpleDisplay('指令号', '');
 
 const UnsupportType = () => <Item>暂不支持</Item>
 
@@ -85,6 +88,8 @@ function getTypeAppCtrlConstructor(type) {
     case 'gray-lamp': return GrayLamp;
     case 'temperature-sensor': return Temperature;
     case 'illuminance-sensor': return Illuminance;
+    case 'occupy-sensor': return Occupy;
+    case 'asr-sensor': return Asr;
     default: return UnsupportType;
   }
 }
@@ -142,8 +147,11 @@ let App = ({
             >MAC</InputItem>
           </List>
           <footer>
-            <Button inline onClick={handleSave} type="primary">保存</Button>
-            <Button inline onClick={handleReset}>重置</Button>
+            <WhiteSpace />
+            <WingBlank>
+              <Button inline onClick={handleSave} type="primary">保存</Button>
+              <Button inline onClick={handleReset} style={{marginLeft: 16}}>重置</Button>
+            </WingBlank>
           </footer>
           <List renderHeader={() => '控制器' + (isManualMode ? '' : '（当前非手动模式，控制器不可用）')}>
             <AppCtrl 
