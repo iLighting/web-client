@@ -6,10 +6,11 @@ import Menu from '../../components/Menu';
 import Lamp from './Lamp';
 import SensorTemperature from './SensorTemperature';
 import SensorIlluminance from './SensorIlluminance';
+import SensorOccupy from './SensorOccupy';
 import SensorAsr from './SensorAsr';
 
 
-function Index({children}) {
+function Index({ children }) {
   return (
     <div>
       <Menu name="manual"></Menu>
@@ -28,5 +29,6 @@ export {
   Lamp,
   SensorTemperature,
   SensorIlluminance,
+  SensorOccupy,
   SensorAsr
 }

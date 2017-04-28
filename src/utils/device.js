@@ -1,16 +1,39 @@
-
 /**
  * @param {String} type
  * @return {Array}
  */
 export function filterAppsByType(deviceList, type) {
   let re = [];
-  for(let i=0; i<deviceList.length; i++) {
+  for (let i = 0; i < deviceList.length; i++) {
     const dev = deviceList[i];
     const apps = dev.apps;
-    for(let j=0; j<apps.length; j++) {
+    for (let j = 0; j < apps.length; j++) {
       const app = apps[j];
       if (!type || (app.type === type)) {
+        re.push({
+          ...app,
+          nwk: dev.nwk,
+          ieee: dev.ieee,
+          devName: dev.name,
+        })
+      }
+    }
+  }
+  return re;
+}
+
+/**
+ * @param {Array} types
+ * @return {Array}
+ */
+export function filterAppsByTypes(deviceList, types) {
+  let re = [];
+  for (let i = 0; i < deviceList.length; i++) {
+    const dev = deviceList[i];
+    const apps = dev.apps;
+    for (let j = 0; j < apps.length; j++) {
+      const app = apps[j];
+      if (types.indexOf(app.type) >= 0) {
         re.push({
           ...app,
           nwk: dev.nwk,
@@ -29,10 +52,10 @@ export function filterAppsByType(deviceList, type) {
  * @return {Object}
  */
 export function pickAppFromNwkEp(deviceList, nwk, ep) {
-  for(let i=0; i<deviceList.length; i++) {
+  for (let i = 0; i < deviceList.length; i++) {
     const dev = deviceList[i];
     const apps = dev.apps;
-    for(let j=0; j<apps.length; j++) {
+    for (let j = 0; j < apps.length; j++) {
       const app = apps[j];
       if ((dev.nwk == nwk) && (app.endPoint == ep)) {
         return {
@@ -53,10 +76,10 @@ export function pickAppFromNwkEp(deviceList, nwk, ep) {
  * @return {Object}
  */
 export function replaceAppByNwkEp(deviceList, nwk, ep, newApp) {
-  for(let i=0; i<deviceList.length; i++) {
+  for (let i = 0; i < deviceList.length; i++) {
     const dev = deviceList[i];
     const apps = dev.apps;
-    for(let j=0; j<apps.length; j++) {
+    for (let j = 0; j < apps.length; j++) {
       const app = apps[j];
       if ((dev.nwk == nwk) && (app.endPoint == ep)) {
         apps[j] = newApp;

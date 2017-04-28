@@ -1,6 +1,11 @@
-import { notification } from 'antd';
+import {
+  notification
+} from 'antd';
 
-function onAction ({dispatch, getState}) {
+function onAction({
+  dispatch,
+  getState
+}) {
   return function (next) {
     return function (action) {
       // 有err字段则警告错误
@@ -12,11 +17,16 @@ function onAction ({dispatch, getState}) {
       }
       // 有notification字段则警告
       if (action.notification) {
-        let { type, message, description } = action.notification;
+        let {
+          type,
+          message,
+          description
+        } = action.notification;
         type = type || 'info';
         message = message || action.type;
         notification[type]({
-          message, description
+          message,
+          description
         });
       }
       next(action);

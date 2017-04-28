@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
 import _ from 'lodash';
+import moment from 'moment';
 import {
   Menu,
   Col,
@@ -10,6 +11,7 @@ import {
   Form,
   Input,
   InputNumber,
+  TimePicker,
   Button,
   Switch,
   Select,
@@ -48,9 +50,9 @@ class AddRuleDialog extends Component {
     }
   }
   filterAppsByIeee() {
-    const {ieee} = this.state;
-    const {devices} = this.props;
-    for(let i=0; i<devices.length; i++) {
+    const { ieee } = this.state;
+    const { devices } = this.props;
+    for (let i = 0; i < devices.length; i++) {
       if (devices[i].ieee === ieee) {
         return devices[i].apps
       }
@@ -59,20 +61,20 @@ class AddRuleDialog extends Component {
   }
   handleCancel() { this.props.onCancel && this.props.onCancel() }
   handleSure() {
-    const {ieee, ep, type, payload} = this.state;
-    if ( ieee && ep && type && payload ) {
+    const { ieee, ep, type, payload } = this.state;
+    if (ieee && ep && type && payload) {
       this.props.onSure && this.props.onSure(this.state)
     }
   }
-  handleSelectIeee(ieee) { this.setState({ieee, ep: null, type: null, payload: null}) }
-  handleSelectEp(ep) { this.setState({ep: +ep}) }
-  handleSelectType(type) { this.setState({type}) }
+  handleSelectIeee(ieee) { this.setState({ ieee, ep: null, type: null, payload: null }) }
+  handleSelectEp(ep) { this.setState({ ep: +ep }) }
+  handleSelectType(type) { this.setState({ type }) }
   genPayloadNode() {
     const policy = judgePolicyMap[this.state.type];
     if (policy) {
-      const {payloadType} = policy;
+      const { payloadType } = policy;
       if (payloadType == 'number') {
-        const handler = value => this.setState({payload: +value})
+        const handler = value => this.setState({ payload: +value })
         return <InputNumber value={this.state.payload} onChange={handler} />
       }
       else {
@@ -84,14 +86,14 @@ class AddRuleDialog extends Component {
   render() {
     const { devices, visible } = this.props;
     const formItemLayout = {
-      labelCol: {span: 6},
-      wrapperCol: {span: 18}
+      labelCol: { span: 6 },
+      wrapperCol: { span: 18 }
     }
     return (
       <Modal
         title="增加一条规则"
         width={500}
-        visible={visible} 
+        visible={visible}
         onCancel={this.handleCancel.bind(this)}
         onOk={this.handleSure.bind(this)}
       >
@@ -99,23 +101,23 @@ class AddRuleDialog extends Component {
           <FormItem label="MAC地址" {...formItemLayout}>
             <Select value={this.state.ieee} onSelect={this.handleSelectIeee.bind(this)}>
               {devices.map(dev => {
-                const {name, ieee} = dev;
+                const { name, ieee } = dev;
                 return <Option key={ieee} value={ieee}>{`${ieee} (${name})`}</Option>
               })}
             </Select>
           </FormItem>
           <FormItem label="端点" {...formItemLayout}>
-            <Select value={this.state.ep+''} onSelect={this.handleSelectEp.bind(this)}>
+            <Select value={this.state.ep + ''} onSelect={this.handleSelectEp.bind(this)}>
               {this.filterAppsByIeee().map(app => {
-                const {name, endPoint} = app;
-                return <Option key={endPoint} value={endPoint+''}>{`${endPoint} (${name})`}</Option>
+                const { name, endPoint } = app;
+                return <Option key={endPoint} value={endPoint + ''}>{`${endPoint} (${name})`}</Option>
               })}
             </Select>
           </FormItem>
           <FormItem label="规则" {...formItemLayout}>
             <Select value={this.state.type} onSelect={this.handleSelectType.bind(this)}>
               {Object.keys(judgePolicyMap).map(type => {
-                const {title, payloadType} = judgePolicyMap[type];
+                const { title, payloadType } = judgePolicyMap[type];
                 return <Option key={type} value={type}>{title}</Option>
               })}
             </Select>
@@ -146,30 +148,46 @@ class ChooserView extends Component {
     this.state = {
       name: props.name,
       scene: props.scene,
+      timeRange: ['00:00', '23:59'],
       rules: props.rules,
       addRuleDialogVisible: false
     }
   }
   componentWillReceiveProps(nextProps) {
-    const {name, scene, rules} = nextProps;
-    this.setState({name, scene, rules});
+    const { name, scene, timeRange, rules } = nextProps;
+    this.setState({ name, scene, timeRange, rules });
   }
-  handleChangeName(event) { const name = event.target.value; this.setState({name})}
-  handleChangeScene(sid) {this.setState({scene: sid})}
+  handleChangeName(event) { const name = event.target.value; this.setState({ name }) }
+  handleChangeTimeRange_0(time) {
+    this.setState({
+      timeRange: [time.format('HH:mm'), this.state.timeRange[1]]
+    })
+  }
+  handleChangeTimeRange_1(time) {
+    this.setState({
+      timeRange: [this.state.timeRange[0], time.format('HH:mm')]
+    })
+  }
+  handleChangeTimeRangeToWholeDay() {
+    this.setState({
+      timeRange: ['00:00', '23:59'],
+    })
+  }
+  handleChangeScene(sid) { this.setState({ scene: sid }) }
   handleClickAddRule() {
-    this.setState({addRuleDialogVisible: true})
+    this.setState({ addRuleDialogVisible: true })
   }
   handleCancelAddRule() {
-    this.setState({addRuleDialogVisible: false})
+    this.setState({ addRuleDialogVisible: false })
   }
-  handleAddRuleSure({ieee, ep, type, payload}) {
+  handleAddRuleSure({ ieee, ep, type, payload }) {
     this.setState({
       addRuleDialogVisible: false,
-      rules: this.state.rules.concat([{ieee, ep, type, payload}])
+      rules: this.state.rules.concat([{ ieee, ep, type, payload }])
     })
   }
   handleDeleteRule(index) {
-    const rules = this.state.rules.filter((r, rIndex)=> rIndex!==index);
+    const rules = this.state.rules.filter((r, rIndex) => rIndex !== index);
     this.setState({ rules })
   }
   handleSave() {
@@ -177,24 +195,25 @@ class ChooserView extends Component {
       id: this.props.gid,
       name: this.state.name,
       scene: this.state.scene,
+      timeRange: this.state.timeRange,
       rules: this.state.rules,
     });
   }
   render() {
-    const {gid, sceneList, extraBtns} = this.props;
+    const { gid, sceneList, extraBtns } = this.props;
     const layout = {
-      labelCol: {span:4},
-      wrapperCol: {span:20}
+      labelCol: { span: 4 },
+      wrapperCol: { span: 20 }
     }
     return (
       <div>
-        <AddRuleDialog 
+        <AddRuleDialog
           visible={this.state.addRuleDialogVisible}
           onSure={this.handleAddRuleSure.bind(this)}
           onCancel={this.handleCancelAddRule.bind(this)}
         />
         <Form>
-          <FormItem label="选择器ID" {...layout}>
+          <FormItem label="切换器ID" {...layout}>
             <p>{gid}</p>
           </FormItem>
           <FormItem label="名称" {...layout}>
@@ -207,12 +226,17 @@ class ChooserView extends Component {
               }
             </Select>
           </FormItem>
+          <FormItem label='时间约束' {...layout}>
+            从 <TimePicker value={moment(this.state.timeRange[0], 'HH:mm')} format='HH:mm' onChange={this.handleChangeTimeRange_0.bind(this)} />
+            到 <TimePicker value={moment(this.state.timeRange[1], 'HH:mm')} format='HH:mm' onChange={this.handleChangeTimeRange_1.bind(this)} />
+            （<a onClick={this.handleChangeTimeRangeToWholeDay.bind(this)}>设为全天</a>）
+          </FormItem>
           <FormItem label="规则列表" {...layout}>
             {
               this.state.rules.map((rule, index) => (
                 <p key={index}>
                   {`${rule.ieee}:${rule.ep} ${judgePolicyMap[rule.type].title} ${rule.payload}`}
-                  <a onClick={this.handleDeleteRule.bind(this,index)} >(删除)</a>
+                  <a onClick={this.handleDeleteRule.bind(this, index)} >(删除)</a>
                 </p>
               ))
             }
@@ -222,7 +246,7 @@ class ChooserView extends Component {
         <Row>
           <Col span={20} offset={4}>
             <Button type="primary" onClick={this.handleSave.bind(this)}>保存</Button>
-            { extraBtns }
+            {extraBtns}
           </Col>
         </Row>
       </div>
@@ -233,6 +257,7 @@ ChooserView.propTypes = {
   gid: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   scene: PropTypes.string.isRequired,
+  timeRange: PropTypes.array.isRequired,
   rules: PropTypes.array.isRequired,
   sceneList: PropTypes.array.isRequired,
   extraBtns: PropTypes.array,
@@ -249,19 +274,19 @@ const SideMenu = ({
   selectedId,
   groups
 }) => (
-  <Menu selectedKeys={[selectedId]}>
-    {
-      groups.map(group => (
-        <Menu.Item key={group.id}>
-          <Link to={`/staticScene/chooser/edit/${group.id}`}>{group.name}</Link>
-        </Menu.Item>
-      ))
-    }
-    <Menu.Item key="add">
-      <Link to={`/staticScene/chooser/add`}>新增选择器 +</Link>
-    </Menu.Item>
-  </Menu>
-)
+    <Menu selectedKeys={[selectedId]}>
+      {
+        groups.map(group => (
+          <Menu.Item key={group.id}>
+            <Link to={`/staticScene/chooser/edit/${group.id}`}>{group.name}</Link>
+          </Menu.Item>
+        ))
+      }
+      <Menu.Item key="add">
+        <Link to={`/staticScene/chooser/add`}>新增切换器 +</Link>
+      </Menu.Item>
+    </Menu>
+  )
 
 // Index
 // =================================================
@@ -269,16 +294,16 @@ const SideMenu = ({
 let Index = ({
   groups
 }) => (
-  <div>
-    <SceneMenu name="chooser" />
-    <Row gutter={8}>
-      <Col span={6}>
-        <SideMenu groups={groups} />
-      </Col>
-      <Col span={18}>从左侧列表选择</Col>
-    </Row>
-  </div>
-)
+    <div>
+      <SceneMenu name="chooser" />
+      <Row gutter={8}>
+        <Col span={6}>
+          <SideMenu groups={groups} />
+        </Col>
+        <Col span={18}>从左侧列表选择</Col>
+      </Row>
+    </div>
+  )
 Index = connect(
   state => ({
     groups: state.staticSceneChooser.groups,
@@ -295,15 +320,15 @@ class Editor extends Component {
     super(props);
     this.state = {}
   }
-  handleSave({id, name, scene, rules}) {
-    this.props.setGroup({id, name, scene, rules});
+  handleSave({ id, name, scene, timeRange, rules }) {
+    this.props.setGroup({ id, name, scene, timeRange, rules });
   }
   handleDel(id) {
     this.props.delGroup(id);
   }
   render() {
-    const {groups, groupSetting} = this.props;
-    const {id: currentId} = this.props.params;
+    const { groups, groupSetting } = this.props;
+    const { id: currentId } = this.props.params;
     const currentGroup = _.find(groups, g => g.id == currentId);
     return (
       <div>
@@ -314,12 +339,13 @@ class Editor extends Component {
           </Col>
           <Col span={18}>
             {
-              currentGroup ? 
+              currentGroup ?
                 <Spin spinning={groupSetting} tip={'正在保存'}>
                   <ChooserView
                     gid={currentGroup.id}
                     name={currentGroup.name}
                     scene={currentGroup.scene}
+                    timeRange={currentGroup.timeRange}
                     rules={currentGroup.rules}
                     extraBtns={[
                       <Button type="danger" onClick={this.handleDel.bind(this, currentGroup.id)} key='1'>删除</Button>
@@ -341,11 +367,11 @@ Editor = connect(
     groupSetting: state.staticSceneChooser.groupSetting,
   }),
   dispatch => ({
-    setGroup(group) { dispatch({type: 'staticSceneChooser/setGroup', payload: group}) },
-    delGroup(id) { dispatch({type: 'staticSceneChooser/delGroup', payload: id}) }
+    setGroup(group) { dispatch({ type: 'staticSceneChooser/setGroup', payload: group }) },
+    delGroup(id) { dispatch({ type: 'staticSceneChooser/delGroup', payload: id }) }
   })
 )(Editor)
-export {Editor};
+export { Editor };
 
 
 // add New
@@ -357,18 +383,18 @@ class AddNew extends Component {
     this.state = {}
     this.isSavingFlag = false;
   }
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.isSavingFlag && !nextProps.groupAdding) {
       this.isSavingFlag = false;
       this.props.history.push('/staticScene/chooser')
     }
   }
-  handleSave({id, name, scene, rules}) {
-    this.props.addGroup({id, name, scene, rules});
+  handleSave({ id, name, scene, timeRange, rules }) {
+    this.props.addGroup({ id, name, scene, timeRange, rules });
     this.isSavingFlag = true;
   }
   render() {
-    const {groups, groupAdding} = this.props;
+    const { groups, groupAdding } = this.props;
     return (
       <div>
         <SceneMenu name="chooser" />
@@ -382,6 +408,7 @@ class AddNew extends Component {
                 gid={'暂无'}
                 name={''}
                 scene={''}
+                timeRange={[]}
                 rules={[]}
                 onSave={this.handleSave.bind(this)}
               />
@@ -398,7 +425,7 @@ AddNew = connect(
     groupAdding: state.staticSceneChooser.groupAdding
   }),
   dispatch => ({
-    addGroup(group) { dispatch({type: 'staticSceneChooser/addGroup', payload: group}) },
+    addGroup(group) { dispatch({ type: 'staticSceneChooser/addGroup', payload: group }) },
   })
 )(AddNew)
-export {AddNew};
+export { AddNew };
